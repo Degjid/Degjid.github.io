@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研途智导 — 基于高校官方来源的保研政策与夏令营智能助手</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317456F'/%3E%3Cpath d='M18 40 L32 20 L46 40 Z' fill='none' stroke='%23F5F6F8' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='42' r='5' fill='%23E8A33D'/%3E%3Cpath d='M24 40 h16 M28 35 h8' stroke='%23F5F6F8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ink:#1E2A38; --ink2:#54616F; --ink3:#7C8894;
+  --paper:#F5F6F8; --card:#FFFFFF; --line:#E3E7EC;
+  --blue:#17456F; --blue2:#2E6DA4; --blue-bg:#EAF1F8;
+  --amber:#D98E2B; --amber-bg:#FBF1E2;
+  --teal:#0E7C6B; --teal-bg:#E5F2EF;
+  --red:#C0392B; --red-bg:#FBEBE9;
+  --shadow:0 1px 2px rgba(23,69,111,.06),0 8px 24px -12px rgba(23,69,111,.18);
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC',system-ui,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--paper);color:var(--ink);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'Noto Serif SC',Georgia,'Songti SC','SimSun',serif}
+img,svg{display:block}
+a{color:var(--blue2);text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:16px;color:var(--ink)}
+[hidden]{display:none!important}
+
+/* ===== 图标 ===== */
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:0 16px;height:58px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:9px;font-family:'Noto Serif SC',serif;font-weight:700;font-size:19px;color:var(--blue);letter-spacing:.5px}
+.brand svg{width:30px;height:30px}
+.brand small{display:block;font-family:'Noto Sans SC',sans-serif;font-size:10.5px;font-weight:500;color:var(--ink3);letter-spacing:.4px;line-height:1.2}
+.nav{display:none;align-items:center;gap:2px;margin-left:auto}
+.nav a{padding:8px 12px;border-radius:8px;font-size:14px;color:var(--ink2);font-weight:500}
+.nav a:hover{color:var(--blue);background:var(--blue-bg)}
+.nav a.on{color:var(--blue);background:var(--blue-bg)}
+.burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;margin-left:auto;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.mdrawer{position:fixed;inset:0;z-index:60;background:rgba(20,35,50,.4);display:none}
+.mdrawer.open{display:block}
+.mdrawer-panel{position:absolute;top:0;right:0;bottom:0;width:min(300px,82vw);background:#fff;padding:18px;display:flex;flex-direction:column;gap:4px;box-shadow:var(--shadow)}
+.mdrawer-panel a{padding:13px 12px;border-radius:10px;font-size:15px;color:var(--ink);font-weight:500}
+.mdrawer-panel a:hover{background:var(--blue-bg);color:var(--blue)}
+.mdrawer-panel .close{margin-left:auto;display:inline-flex;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);margin-bottom:10px}
+@media (min-width:900px){.nav{display:flex}.burger{display:none}}
+
+/* ===== 布局 ===== */
+main{max-width:1120px;margin:0 auto;padding:0 16px 56px}
+.view{padding-top:34px}
+.sec-head{margin-bottom:22px}
+.sec-head .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--blue2);text-transform:uppercase}
+.sec-head .kicker::before{content:"";width:22px;height:2px;background:var(--amber);border-radius:2px}
+.sec-head h2{font-size:clamp(21px,3.4vw,28px);font-weight:700;color:var(--ink);margin-top:6px}
+.sec-head p{color:var(--ink2);margin-top:6px;max-width:640px}
+
+/* ===== 通用按钮/卡片/徽章 ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:10px;font-size:15px;font-weight:700;border:1px solid transparent;transition:background .15s,transform .05s}
+.btn:active{transform:translateY(1px)}
+.btn-p{background:var(--blue);color:#fff}
+.btn-p:hover{background:#123a5e}
+.btn-g{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-g:hover{border-color:var(--blue2);color:var(--blue)}
+.btn-sm{min-height:36px;padding:0 14px;font-size:13.5px;border-radius:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.b-open{background:var(--teal-bg);color:var(--teal)}
+.b-soon{background:var(--amber-bg);color:var(--amber)}
+.b-end{background:var(--red-bg);color:var(--red)}
+.b-wait{background:#EEF0F3;color:var(--ink3)}
+.tag{display:inline-block;padding:2px 9px;border-radius:6px;font-size:12px;font-weight:500;background:var(--blue-bg);color:var(--blue2);white-space:nowrap}
+
+/* ===== Hero ===== */
+.hero{display:grid;gap:26px;padding:26px 0 8px}
+.hero h1{font-size:clamp(30px,6vw,46px);font-weight:900;line-height:1.18;color:var(--ink);letter-spacing:.5px}
+.hero h1 em{font-style:normal;color:var(--blue);position:relative}
+.hero .sub{margin-top:14px;color:var(--ink2);font-size:15.5px;max-width:600px}
+.quickask{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;display:flex;gap:8px;box-shadow:var(--shadow);max-width:620px}
+.quickask input{flex:1;min-width:0;border:0;outline:none;background:transparent;font-size:15px;padding:0 10px}
+.quickask button{flex:none;min-height:44px;padding:0 18px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:7px}
+.quickask button:hover{background:#123a5e}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;max-width:640px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink2);font-size:13px}
+.chip:hover{border-color:var(--blue2);color:var(--blue);background:var(--blue-bg)}
+.stats{display:flex;flex-wrap:wrap;gap:0;margin-top:26px;border-top:1px solid var(--line);padding-top:20px}
+.stat{flex:1;min-width:130px;padding-right:18px}
+.stat b{display:block;font-family:'Noto Serif SC',serif;font-size:26px;font-weight:700;color:var(--blue)}
+.stat span{font-size:13px;color:var(--ink2)}
+.hero-art{display:none;align-items:center;justify-content:center}
+@media (min-width:900px){
+  .hero{grid-template-columns:1.15fr .85fr;align-items:center;gap:34px}
+  .hero-art{display:flex}
+}
+/* 路径示意 */
+.route{width:100%;max-width:400px;background:linear-gradient(180deg,#fff,#FBFCFD);border:1px solid var(--line);border-radius:16px;padding:22px 18px;box-shadow:var(--shadow)}
+.route h3{font-size:15px;color:var(--ink);display:flex;align-items:center;gap:8px}
+.route h3 .ico{color:var(--blue2)}
+.rnode{display:flex;gap:12px;margin-top:16px;position:relative}
+.rnode:not(:last-child)::after{content:"";position:absolute;left:15px;top:34px;bottom:-16px;width:2px;background:var(--line)}
+.rnode .n{width:32px;height:32px;border-radius:50%;background:var(--blue-bg);color:var(--blue);display:flex;align-items:center;justify-content:center;flex:none;z-index:1}
+.rnode .n .ico{width:17px;height:17px}
+.rnode b{display:block;font-size:14px;color:var(--ink)}
+.rnode span{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.route .rf{display:flex;align-items:center;gap:7px;margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--teal);font-weight:700}
+
+/* ===== 功能卡片 ===== */
+.features{display:grid;grid-template-columns:1fr;gap:14px;margin-top:6px}
+@media (min-width:640px){.features{grid-template-columns:repeat(3,1fr)}}
+.feature{padding:22px 20px;display:flex;flex-direction:column;gap:10px;transition:transform .15s}
+.feature:hover{transform:translateY(-2px)}
+.feature .fi{width:46px;height:46px;border-radius:12px;background:var(--blue-bg);color:var(--blue);display:flex;align-items:center;justify-content:center}
+.feature .fi .ico{width:24px;height:24px}
+.feature h3{font-size:17px;color:var(--ink)}
+.feature p{font-size:13.5px;color:var(--ink2);flex:1}
+.feature a{align-self:flex-start;font-size:13.5px;font-weight:700;color:var(--blue2);display:inline-flex;align-items:center;gap:5px}
+.feature a .ico{width:15px;height:15px}
+
+/* ===== 可信流程 ===== */
+.trust{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px;margin-top:6px}
+.trust h3{font-size:16px;margin-bottom:14px;color:var(--ink)}
+.tsteps{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:700px){.tsteps{grid-template-columns:repeat(4,1fr)}}
+.tstep{display:flex;gap:10px;align-items:flex-start}
+.tstep .tn{flex:none;width:26px;height:26px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif}
+.tstep b{display:block;font-size:13.5px;color:var(--ink)}
+.tstep span{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.tnote{margin-top:14px;font-size:12.5px;color:var(--ink3);padding-top:12px;border-top:1px dashed var(--line)}
+
+/* ===== 页脚 ===== */
+footer{background:#14283C;color:#C7D3DE;padding:30px 16px 40px;margin-top:20px}
+.foot-in{max-width:1120px;margin:0 auto;display:grid;gap:18px}
+@media (min-width:760px){.foot-in{grid-template-columns:1.2fr 1fr}}
+.foot-in h4{color:#fff;font-size:15px;margin-bottom:8px;font-family:'Noto Serif SC',serif}
+.foot-in p{font-size:12.5px;line-height:1.7;color:#9FB2C1}
+.foot-in ul{list-style:none;font-size:12.5px;line-height:1.9;color:#9FB2C1}
+.foot-in a{color:#BFD5E6}
+.foot-bottom{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:#7E94A6;max-width:1120px;margin-left:auto;margin-right:auto}
+@media (max-width:759px){.foot-bottom{margin-left:16px;margin-right:16px}}
+
+/* ===== 智能问答 ===== */
+.chat{display:flex;flex-direction:column;min-height:420px;overflow:hidden}
+.chat-head{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink2);background:#FAFBFC}
+.chat-head .ico{color:var(--teal);width:16px;height:16px}
+.chat-log{flex:1;padding:16px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;max-height:520px;background:#fff}
+.msg{max-width:88%}
+.msg-user{align-self:flex-end}
+.msg-bot{align-self:flex-start}
+.msg .bubble{padding:11px 14px;border-radius:14px;font-size:14.5px;line-height:1.7}
+.msg-user .bubble{background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+.msg-bot .bubble{background:var(--paper);border:1px solid var(--line);border-bottom-left-radius:4px;color:var(--ink)}
+.msg-bot .meta{margin-top:6px;font-size:12px;color:var(--ink3);display:flex;align-items:center;gap:6px}
+.msg-bot .meta .ico{width:13px;height:13px}
+.refuse{margin-top:10px;background:var(--amber-bg);border:1px solid #F0D9B4;border-radius:10px;padding:10px 13px;font-size:13.5px;color:#7A5A22;line-height:1.7}
+.ask-hint{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ask-hint .hint{font-size:13px;color:var(--ink3);margin-right:2px}
+.kbcard{margin-top:10px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue2);border-radius:10px;padding:12px 14px;box-shadow:0 2px 10px -8px rgba(23,69,111,.25)}
+.kbcard h4{font-size:14.5px;color:var(--ink);font-family:'Noto Sans SC',sans-serif;font-weight:700;line-height:1.45}
+.kbcard .kbtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.kbcard .kbf{display:grid;gap:3px;margin-top:9px;font-size:13px;color:var(--ink2);line-height:1.6}
+.kbcard .kbf b{color:var(--ink);font-weight:700}
+.kbcard .kbsrc{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--ink3);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.kbcard .kbsrc a{color:var(--blue2);font-weight:500;display:inline-flex;align-items:center;gap:4px}
+.kbcard .kbsrc .ico{width:13px;height:13px}
+.kbcard .kbact{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+.kbcard .matchwhy{margin-top:8px;background:var(--paper);border-radius:8px;padding:8px 11px;font-size:12.5px;color:var(--ink2);line-height:1.65}
+.chat-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:#fff}
+.chat-form input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:0 14px;height:46px;outline:none}
+.chat-form input:focus{border-color:var(--blue2)}
+.chat-form button{flex:none;height:46px;padding:0 18px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-size:15px;font-weight:700}
+.chat-form button:hover{background:#123a5e}
+
+/* ===== 条件匹配 ===== */
+.match-grid{display:grid;gap:18px}
+@media (min-width:900px){.match-grid{grid-template-columns:.92fr 1.08fr;align-items:start}}
+.mform{padding:20px}
+.mform h3{font-size:16px;margin-bottom:4px}
+.mform .msub{font-size:12.5px;color:var(--ink3);margin-bottom:14px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.field input,.field select{width:100%;height:44px;border:1px solid var(--line);border-radius:9px;padding:0 12px;background:#fff;outline:none}
+.field input:focus,.field select:focus{border-color:var(--blue2)}
+.mform .btn{margin-top:8px;width:100%}
+.mresult .sec-label{font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.mresult .sec-label .n{background:var(--blue);color:#fff;border-radius:6px;font-size:12px;padding:1px 8px}
+.mcard{border-left:3px solid var(--line);margin-bottom:12px}
+.mcard.s-pass{border-left-color:var(--teal)}
+.mcard.s-warn{border-left-color:var(--amber)}
+.mcard.s-fail{border-left-color:var(--red)}
+.mcard.s-wait{border-left-color:var(--ink3)}
+.mcard .mc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:13px 15px 0}
+.mcard h4{font-size:14.5px;color:var(--ink)}
+.mcard .mc-sub{font-size:12.5px;color:var(--ink3);margin-top:3px}
+.mcard .mc-body{padding:8px 15px 13px}
+.mcard .mc-reason{font-size:13px;color:var(--ink2);line-height:1.7;margin-top:6px}
+.mcard .mc-reason li{margin-left:18px}
+.mcard .mc-act{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.mempty{padding:34px 20px;text-align:center;color:var(--ink3);font-size:14px;line-height:1.8}
+.mempty b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px}
+
+/* ===== 信息库 ===== */
+.lib-tools{display:grid;gap:10px;margin-bottom:16px}
+.lib-search{display:flex;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:7px;box-shadow:var(--shadow)}
+.lib-search input{flex:1;min-width:0;border:0;outline:none;padding:0 10px;background:transparent}
+.lib-search button{flex:none;min-height:40px;padding:0 16px;border:0;border-radius:9px;background:var(--blue);color:#fff;font-weight:700}
+.lib-filters{display:flex;flex-wrap:wrap;gap:8px}
+.lib-filters select{height:40px;border:1px solid var(--line);border-radius:9px;background:#fff;padding:0 10px;color:var(--ink);font-size:13.5px;outline:none}
+.lib-count{font-size:13px;color:var(--ink3);margin-bottom:12px}
+.lib-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:640px){.lib-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:960px){.lib-grid{grid-template-columns:repeat(3,1fr)}}
+.lcard{display:flex;flex-direction:column;gap:9px;padding:16px}
+.lcard h4{font-size:15px;color:var(--ink);line-height:1.5;font-weight:700}
+.lcard .ltags{display:flex;flex-wrap:wrap;gap:6px}
+.lcard .lmeta{font-size:12.5px;color:var(--ink2);display:grid;gap:3px}
+.lcard .lmeta b{color:var(--ink);font-weight:600}
+.lcard .lfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px dashed var(--line)}
+.lcard .lfoot .btn{flex:none}
+.empty{text-align:center;padding:44px 16px;color:var(--ink3);font-size:14px}
+.empty b{display:block;font-size:16px;color:var(--ink);margin-bottom:6px}
+
+/* ===== 项目详情 ===== */
+.item-back{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--blue2);margin-bottom:14px}
+.item-back .ico{width:16px;height:16px}
+.item-head{padding:20px;display:grid;gap:12px}
+.item-head h2{font-size:clamp(19px,3vw,24px);line-height:1.4;color:var(--ink)}
+.item-meta{display:flex;flex-wrap:wrap;gap:8px}
+.item-cd{display:flex;align-items:center;gap:10px;background:var(--blue-bg);border-radius:10px;padding:10px 14px;margin-top:2px}
+.item-cd .ico{color:var(--blue);width:22px;height:22px}
+.item-cd b{font-size:19px;color:var(--blue);font-family:'Noto Serif SC',serif}
+.item-cd span{font-size:12.5px;color:var(--ink2)}
+.kv{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+@media (min-width:640px){.kv{grid-template-columns:1fr 1fr}}
+.kv .box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kv .box h4{font-size:13.5px;color:var(--blue2);display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.kv .box h4 .ico{width:16px;height:16px}
+.kv ul{list-style:none;font-size:13.5px;color:var(--ink2);line-height:1.8}
+.kv ul li{padding-left:16px;position:relative}
+.kv ul li::before{content:"";position:absolute;left:2px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--amber)}
+.matlist{display:grid;gap:8px}
+.matlist label{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--ink2);line-height:1.6;cursor:pointer;padding:6px 0}
+.matlist input{width:18px;height:18px;margin-top:2px;accent-color:var(--teal);flex:none}
+.matlist input:checked+span{color:var(--ink);text-decoration:line-through;text-decoration-color:var(--ink3)}
+.item-src{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink2);line-height:1.8}
+.item-src .ico{width:15px;height:15px;display:inline-block;vertical-align:-2px;margin-right:4px;color:var(--blue2)}
+.item-act{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* ===== 收藏与提醒 ===== */
+.fav-tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
+.fav-tools .btn{flex:none}
+.cdbar{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:720px){.cdbar{grid-template-columns:repeat(2,1fr)}}
+.cdbar .cdb{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+.cdb .cdb-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cdb h4{font-size:14.5px;color:var(--ink);line-height:1.5}
+.cdb .cdb-num{font-family:'Noto Serif SC',serif;font-size:30px;font-weight:700;color:var(--blue)}
+.cdb .cdb-num.end{color:var(--red)}
+.cdb .cdb-sub{font-size:12.5px;color:var(--ink3);margin-top:2px}
+.cdb .cdb-mat{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.cdb .cdb-mat label{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--ink2);padding:5px 0;cursor:pointer}
+.cdb .cdb-mat input{width:17px;height:17px;margin-top:2px;accent-color:var(--teal);flex:none}
+.cdb .cdb-act{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.fav-empty{text-align:center;padding:52px 16px;color:var(--ink3)}
+.fav-empty b{display:block;font-size:17px;color:var(--ink);margin:10px 0 6px}
+
+/* ===== 反馈 ===== */
+.fb-wrap{max-width:640px}
+.fb-form{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px}
+.fb-form .field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 12px;min-height:120px;outline:none;resize:vertical;line-height:1.7}
+.fb-form .field textarea:focus{border-color:var(--blue2)}
+.fb-note{margin-top:12px;font-size:12.5px;color:var(--ink3);line-height:1.7;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.fb-note b{color:var(--ink)}
+
+/* ===== Toast ===== */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#1E2A38;color:#fff;padding:11px 18px;border-radius:10px;font-size:13.5px;opacity:0;pointer-events:none;transition:all .25s;z-index:90;max-width:86vw;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===== SVG 图标库 ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5.5 2.5 6.5H3.5C4.5 14.5 6 13 6 9z"/><path d="M10 20a2.2 2.2 0 004 0"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 11a8 8 0 10-16 0c0 2.5 1.2 4.7 3 6.2V21l4.5-2.6A8 8 0 0020 11z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 12h4M12 12h8M4 17h12M20 17h0"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="17" r="2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a5 5 0 007-7l-1-1a5 5 0 00-7 7"/><path d="M14 10a5 5 0 00-7 7l1 1a5 5 0 007-7"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21z"/><path d="M4 5.5v15.5"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 013 3L8 19z"/><path d="M14 7l3 3"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#/home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#17456F"/><path d="M18 40 L32 20 L46 40 Z" fill="none" stroke="#F5F6F8" stroke-width="4" stroke-linejoin="round"/><circle cx="32" cy="42" r="5" fill="#E8A33D"/><path d="M24 40 h16 M28 35 h8" stroke="#F5F6F8" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>研途智导<small>保研 · 夏令营 智能助手</small></span>
+    </a>
+    <nav class="nav" id="topnav">
+      <a href="#/home" data-nav="home">首页</a>
+      <a href="#/ask" data-nav="ask">智能问答</a>
+      <a href="#/match" data-nav="match">条件匹配</a>
+      <a href="#/lib" data-nav="lib">信息库</a>
+      <a href="#/fav" data-nav="fav">我的收藏</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="打开菜单"><svg class="ico"><use href="#i-menu" xlink:href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<div class="mdrawer" id="mdrawer">
+  <div class="mdrawer-panel">
+    <button class="close" id="mclose" aria-label="关闭菜单"><svg class="ico"><use href="#i-x" xlink:href="#i-x"/></svg></button>
+    <a href="#/home">首页</a>
+    <a href="#/ask">智能问答</a>
+    <a href="#/match">条件匹配</a>
+    <a href="#/lib">信息库</a>
+    <a href="#/fav">我的收藏</a>
+    <a href="#/feedback">反馈与纠错</a>
+  </div>
+</div>
+
+<main>
+  <!-- ===== 视图：首页 ===== -->
+  <section class="view" id="view-home">
+    <div class="hero">
+      <div>
+        <h1>研途有据，<em>智导先行</em></h1>
+        <p class="sub">面向有升学规划需求的本科生，汇集高校官网公开发布的保研政策与夏令营通知，提供<strong>带来源的智能问答、条件筛选与截止提醒</strong>。网站只是入口，可信的知识检索才是核心。</p>
+        <form class="quickask" id="quickask">
+          <input id="quickask-input" placeholder="例如：哪些学校接受跨专业申请？" autocomplete="off">
+          <button type="submit"><svg class="ico"><use href="#i-search" xlink:href="#i-search"/></svg>提问</button>
+        </form>
+        <div class="chips" id="hero-chips">
+          <button class="chip" data-q="目前还有哪些夏令营未截止？">还有哪些夏令营未截止？</button>
+          <button class="chip" data-q="内蒙古大学2027年推免的申请条件是什么？">内蒙古大学2027推免条件</button>
+          <button class="chip" data-q="北交大经管学院夏令营对成绩排名有什么要求？">北交大夏令营排名要求</button>
+          <button class="chip" data-q="推免需要准备哪些材料？">推免要准备哪些材料</button>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="stat-kb">10</b><span>官方收录条目</span></div>
+          <div class="stat"><b id="stat-school">7</b><span>覆盖高校</span></div>
+          <div class="stat"><b>100%</b><span>信息标注官方来源</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="route">
+          <h3><svg class="ico"><use href="#i-compass" xlink:href="#i-compass"/></svg>你的升学路径，从这里开始</h3>
+          <div class="rnode"><span class="n"><svg class="ico"><use href="#i-search" xlink:href="#i-search"/></svg></span><div><b>检索官方信息</b><span>只收录高校官网公开文件，逐条标注来源链接</span></div></div>
+          <div class="rnode"><span class="n"><svg class="ico"><use href="#i-filter" xlink:href="#i-filter"/></svg></span><div><b>条件初步匹配</b><span>按专业、排名、英语水平筛选合适项目</span></div></div>
+          <div class="rnode"><span class="n"><svg class="ico"><use href="#i-cal" xlink:href="#i-cal"/></svg></span><div><b>倒计时与材料清单</b><span>收藏项目，生成截止倒计时与待办材料</span></div></div>
+          <div class="rnode"><span class="n"><svg class="ico"><use href="#i-check" xlink:href="#i-check"/></svg></span><div><b>准备申请</b><span>以官方原文为准，不错过每个节点</span></div></div>
+          <div class="rf"><svg class="ico"><use href="#i-shield" xlink:href="#i-shield"/></svg>查不到即明说"未收录"，绝不编造条件与日期</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-top:44px">
+      <span class="kicker">核心能力</span>
+      <h2>三个功能，覆盖"找信息—判断适配—准备申请"</h2>
+      <p>不承诺"保证入营"，只做可信的初步信息匹配与提醒。</p>
+    </div>
+    <div class="features">
+      <div class="feature card">
+        <span class="fi"><svg class="ico"><use href="#i-chat" xlink:href="#i-chat"/></svg></span>
+        <h3>官方信息智能检索</h3>
+        <p>用自然语言提问，从知识库检索匹配条目，并同时展示学校学院、适用年份、申请条件、截止日期、原文链接与收录核验日期。</p>
+        <a href="#/ask">去提问<svg class="ico"><use href="#i-arrow" xlink:href="#i-arrow"/></svg></a>
+      </div>
+      <div class="feature card">
+        <span class="fi"><svg class="ico"><use href="#i-sliders" xlink:href="#i-sliders"/></svg></span>
+        <h3>个性化条件匹配</h3>
+        <p>填写专业、年级、排名区间、英语水平等少量信息，系统筛出"基本符合 / 需要补充条件 / 暂不符合"的项目，并解释判断依据。</p>
+        <a href="#/match">开始匹配<svg class="ico"><use href="#i-arrow" xlink:href="#i-arrow"/></svg></a>
+      </div>
+      <div class="feature card">
+        <span class="fi"><svg class="ico"><use href="#i-bell" xlink:href="#i-bell"/></svg></span>
+        <h3>截止日期与材料清单</h3>
+        <p>收藏目标项目后自动生成申请倒计时、材料清单、关键时间节点与官方报名入口，形成可执行的申请待办。</p>
+        <a href="#/fav">查看我的收藏<svg class="ico"><use href="#i-arrow" xlink:href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-top:44px">
+      <span class="kicker">可信度机制</span>
+      <h2>每一条信息，都能追溯到官方原文</h2>
+    </div>
+    <div class="trust">
+      <h3>信息来源与核验流程</h3>
+      <div class="tsteps">
+        <div class="tstep"><span class="tn">1</span><div><b>官方网页收录</b><span>只采高校研究生院 / 招生网公开发布的文件与通知</span></div></div>
+        <div class="tstep"><span class="tn">2</span><div><b>关键字段提取</b><span>结构化记录条件、材料、起止时间等，保留原文链接</span></div></div>
+        <div class="tstep"><span class="tn">3</span><div><b>核验日期标注</b><span>每条标注收录与核验日期，政策变化时更新版本</span></div></div>
+        <div class="tstep"><span class="tn">4</span><div><b>不确定即拒答</b><span>旧年份信息显著标注，无可靠依据时不凭往年猜测</span></div></div>
+      </div>
+      <p class="tnote">当前为第一版演示知识库（10 条示例收录，2026-10-28 核验）。正式版可按你的目标院校扩展：人工整理少量高质量数据，比大而全但过期的收录更稳。</p>
+    </div>
+  </section>
+
+  <!-- ===== 视图：智能问答 ===== -->
+  <section class="view" id="view-ask" hidden>
+    <div class="sec-head">
+      <span class="kicker">智能问答</span>
+      <h2>官方信息智能检索</h2>
+      <p>用自然语言提问，自动识别年份 / 学校 / 需求，返回带官方来源与核验日期的条目。查不到时会明确说明"当前知识库未收录或无可靠依据"，不会用往年政策猜测今年要求。</p>
+    </div>
+    <div class="chat card">
+      <div class="chat-head"><svg class="ico"><use href="#i-shield" xlink:href="#i-shield"/></svg>已连接本地知识库 · 10 条官方收录 · 检索模式：关键词匹配 + 来源回显</div>
+      <div class="chat-log" id="chat-log"></div>
+      <form class="chat-form" id="chat-form">
+        <input id="chat-input" placeholder="输入你的问题，例如：哪些学校接受跨专业申请？" autocomplete="off">
+        <button type="submit">发送</button>
+      </form>
+    </div>
+    <div class="ask-hint">
+      <span class="hint">试试问：</span>
+      <button class="chip" data-q="推免需要准备哪些材料？">推免要准备哪些材料</button>
+      <button class="chip" data-q="目前还有哪些夏令营未截止？">还有哪些夏令营未截止</button>
+      <button class="chip" data-q="英语六级能不能满足要求？">英语要求</button>
+      <button class="chip" data-q="内蒙古大学外国语学院2026年推免办法">内蒙古大学外院推免</button>
+    </div>
+  </section>
+
+  <!-- ===== 视图：条件匹配 ===== -->
+  <section class="view" id="view-match" hidden>
+    <div class="sec-head">
+      <span class="kicker">个性化条件匹配</span>
+      <h2>初步信息匹配</h2>
+      <p>填写少量必要信息，系统筛出"基本符合 / 需要补充条件 / 暂不符合"的项目，并解释判断依据。这只是<strong>初步信息匹配</strong>，不承诺"保证入营"或"保证保研成功"。</p>
+    </div>
+    <div class="match-grid">
+      <form class="card mform" id="mform">
+        <h3>我的基本情况</h3>
+        <p class="msub">用于和知识库中的申请条件做初步比对，不会上传到任何服务器。</p>
+        <div class="field">
+          <label for="mf-major">本科专业</label>
+          <input id="mf-major" placeholder="如：计算机科学与技术 / 经济学">
+        </div>
+        <div class="field">
+          <label for="mf-grade">当前年级</label>
+          <select id="mf-grade">
+            <option value="">请选择</option>
+            <option>大一</option><option>大二</option><option>大三</option><option>大四</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mf-intent">意向专业 / 方向</label>
+          <input id="mf-intent" placeholder="如：金融 / 计算机 / 不限">
+        </div>
+        <div class="field">
+          <label for="mf-rank">专业排名区间</label>
+          <select id="mf-rank">
+            <option value="">请选择</option>
+            <option value="5">前 5%</option>
+            <option value="10">前 10%</option>
+            <option value="25">前 25%</option>
+            <option value="40">前 40%</option>
+            <option value="60">40% 以后</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mf-en">英语水平</label>
+          <select id="mf-en">
+            <option value="">请选择</option>
+            <option value="none">暂未考四六级</option>
+            <option value="cet4">已过四级（425+）</option>
+            <option value="cet6">已过六级（425+）</option>
+            <option value="cet6h">六级 500+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mf-region">意向地区</label>
+          <select id="mf-region">
+            <option value="">不限</option>
+            <option>内蒙古</option><option>华北（京津冀）</option><option>华东（江浙沪）</option><option>华中</option><option>西北</option><option>西南</option><option>华南</option><option>东北</option>
+          </select>
+        </div>
+        <button class="btn btn-p" type="submit">开始匹配</button>
+      </form>
+      <div class="mresult" id="mresult">
+        <div class="mempty">
+          <b>还没有开始匹配</b>
+          填写左侧信息后点击"开始匹配"，系统将按申请条件逐一比对知识库中的项目。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：信息库 ===== -->
+  <section class="view" id="view-lib" hidden>
+    <div class="sec-head">
+      <span class="kicker">政策与通知筛选</span>
+      <h2>官方信息库</h2>
+      <p>第一版收录 10 条官方公开的保研政策与夏令营通知（2026-10-28 核验）。每条均标注来源、适用年份与当前状态，可筛选、搜索、收藏。</p>
+    </div>
+    <div class="lib-tools">
+      <div class="lib-search">
+        <input id="lib-search-input" placeholder="搜索学校 / 学院 / 关键词，如：内蒙古、计算机、夏令营" autocomplete="off">
+        <button id="lib-search-btn" type="button">搜索</button>
+      </div>
+      <div class="lib-filters">
+        <select id="lib-f-type"><option value="">全部类型</option><option value="保研政策">保研政策</option><option value="夏令营通知">夏令营通知</option><option value="推免复试">推免复试</option></select>
+        <select id="lib-f-status"><option value="">全部状态</option><option value="报名中">报名中</option><option value="即将截止">即将截止</option><option value="已截止">已截止</option><option value="待核实">待核实</option></select>
+        <select id="lib-f-year"><option value="">全部年份</option><option value="2027">2027</option><option value="2026">2026</option></select>
+        <select id="lib-f-region"><option value="">全部地区</option><option value="内蒙古">内蒙古</option><option value="北京">北京</option><option value="浙江">浙江</option><option value="陕西">陕西</option><option value="温州">温州</option></select>
+      </div>
+    </div>
+    <div class="lib-count" id="lib-count"></div>
+    <div class="lib-grid" id="lib-grid"></div>
+  </section>
+
+  <!-- ===== 视图：项目详情 ===== -->
+  <section class="view" id="view-item" hidden>
+    <a class="item-back" href="#/lib"><svg class="ico"><use href="#i-arrow" xlink:href="#i-arrow"/></svg>返回信息库</a>
+    <div class="card item-head" id="item-head"></div>
+    <div class="kv" id="item-kv"></div>
+    <div class="item-src" id="item-src"></div>
+    <div class="item-act" id="item-act"></div>
+  </section>
+
+  <!-- ===== 视图：我的收藏 ===== -->
+  <section class="view" id="view-fav" hidden>
+    <div class="sec-head">
+      <span class="kicker">截止提醒与材料清单</span>
+      <h2>我的收藏</h2>
+      <p>收藏目标项目后，这里自动生成申请倒计时、材料清单与官方报名入口。倒计时基于系统当前时间实时计算（演示环境以本机时间为准）。</p>
+    </div>
+    <div class="fav-tools">
+      <button class="btn btn-g btn-sm" id="fav-to-lib" type="button">去信息库添加</button>
+      <button class="btn btn-g btn-sm" id="fav-clear" type="button">清空收藏</button>
+    </div>
+    <div id="fav-content"></div>
+  </section>
+
+  <!-- ===== 视图：反馈与纠错 ===== -->
+  <section class="view" id="view-feedback" hidden>
+    <div class="fb-wrap">
+      <div class="sec-head">
+        <span class="kicker">用户纠错与反馈</span>
+        <h2>反馈与纠错</h2>
+        <p>如果你发现某条信息与官方原文不符、链接失效，或希望收录某所学校的政策，请告诉我们。确认后我们会按官方原文更正或下架。</p>
+      </div>
+      <form class="fb-form" id="fb-form">
+        <div class="field">
+          <label for="fb-type">反馈类型</label>
+          <select id="fb-type">
+            <option>信息有误</option><option>链接失效</option><option>建议收录</option><option>其他</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fb-email">联系方式（选填）</label>
+          <input id="fb-email" placeholder="邮箱 / 电话，便于我们回访">
+        </div>
+        <div class="field">
+          <label for="fb-msg">具体内容</label>
+          <textarea id="fb-msg" placeholder="请描述问题：涉及哪所学校 / 哪个项目 / 与官方原文的差异，尽量附上官方链接"></textarea>
+        </div>
+        <button class="btn btn-p" type="submit">提交反馈</button>
+      </form>
+      <div class="fb-note">
+        <b>关于数据与隐私：</b>本演示版反馈内容仅保存在你的浏览器本地（localStorage），不会发送到任何服务器；正式部署时会接入后端数据库，用于作品展示中的"错误信息及修正记录"统计。
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-in">
+    <div>
+      <h4>研途智导</h4>
+      <p>基于高校官方来源的保研政策与夏令营智能助手。面向有升学规划需求的本科生，提供带来源的智能问答、条件筛选和申请截止日期提醒。本作品为「AI 校园智能体」方向参赛作品原型。</p>
+    </div>
+    <div>
+      <h4>重要声明</h4>
+      <ul>
+        <li>所有政策、条件、日期均以各高校官方原文为准，本页仅作初步信息参考。</li>
+        <li>条件匹配是"初步信息匹配"，不承诺"保证入营 / 保证保研成功"。</li>
+        <li>查不到的条目会明确提示"未收录或无可靠依据"，不会用往年政策猜测今年要求。</li>
+        <li>发现错误信息，欢迎通过「反馈与纠错」告诉我们，将按官方原文更正或下架。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">研途智导 · AI 校园智能体作品原型 · 知识库核验日期 2026-10-28 · 本页为演示版本，真实部署时接入后端与大模型服务</div>
+</footer>
+
+<script>
+/* ============ 知识库数据（10 条，2026-10-28 核验，全部来自官方公开页面） ============ */
+var KB = [
+  {id:1, school:'内蒙古大学', college:'研究生院', type:'保研政策', year:'2027', region:'内蒙古',
+   title:'内蒙古大学2027年接收推荐免试攻读硕士学位研究生及直接攻读博士学位研究生实施办法',
+   target:['具有推免资格的应届本科生','申请直博生'],
+   conditions:['获得在读学校推荐免试资格','品行端正，无作弊剽窃及违纪处分记录','硕士推免对外国语水平不作要求；直博生需全国大学英语四级425分或日语/俄语四级60分','研究生培养单位可提出更高要求'],
+   rankReq:'以各培养单位要求为准', rankPct:null, englishReq:'硕士不限；直博需四级425或日语/俄语60', enReq:0,
+   cross:'跨专业是否可申请以培养单位要求为准',
+   materials:['推荐免试研究生登记表','接收推免生报名登记材料一览表','（仅直博）两名教授职称专家推荐信','代表性学术论文/专利/原创成果复印件'],
+   applyStart:'2026-09-21', applyEnd:'2026-10-20', activity:'推免服务系统报名，拟10月20日前视进度关闭；复试按学院通知',
+   url:'https://gs.imu.edu.cn/info/1020/2329.htm', publish:'2026-09-15', verify:'2026-10-28',
+   status:'已截止', majors:[],
+   note:'直博生正常学制内每年提供20000元助研津贴。咨询：0471-4992114；ndyjsyzsb@imu.edu.cn'},
+
+  {id:2, school:'内蒙古大学', college:'信息公开网', type:'保研政策', year:'长期', region:'内蒙古',
+   title:'内蒙古大学推荐优秀应届本科毕业生免试攻读研究生工作实施办法（本校推免资格）',
+   target:['本校应届本科生'],
+   conditions:['非英语专业学生全国大学英语四级考试成绩425分以上（含）','艺术类/体育类学生四级355分或高等学校英语应用能力考试50分以上','第一外语为其他语种的，需提供等同全国大学英语四级考试的成绩证明'],
+   rankReq:'以学校当年通知为准', rankPct:null, englishReq:'四级425（非英语专业）；艺术体育类355', enReq:4,
+   cross:'—',
+   materials:['以学校教务处当年通知为准'],
+   applyStart:'', applyEnd:'', activity:'每学年秋季学期（以当年通知为准）',
+   url:'https://xxgk.imu.edu.cn/info/1073/1634.htm', publish:'2021-04-27', verify:'2026-10-28',
+   status:'待核实', majors:[],
+   note:'历史文件，用于了解本校推免资格要求；最新年份以教务处当年通知为准'},
+
+  {id:3, school:'内蒙古大学', college:'外国语学院', type:'保研政策', year:'2026', region:'内蒙古',
+   title:'内蒙古大学外国语学院2026年接收推荐免试攻读硕士学位研究生实施办法',
+   target:['具有推免资格且拟申请外国语学院的应届本科生'],
+   conditions:['依据学校《内蒙古大学2026年接收推免生实施办法》制定','外语语种符合招生专业要求','以学院原文及学校办法为准'],
+   rankReq:'以学院原文为准', rankPct:null, englishReq:'以学院原文为准', enReq:null,
+   cross:'以学院原文为准',
+   materials:['申请材料电子版发送至学院指定邮箱（主题"姓名+申请专业及方向"）'],
+   applyStart:'', applyEnd:'2026-10-20', activity:'推免服务系统报名，按学院要求提交材料并参加复试',
+   url:'https://flc.imu.edu.cn/info/1017/1991.htm', publish:'2025-09-18', verify:'2026-10-28',
+   status:'已截止', majors:['外国语言文学','翻译','英语','日语','俄语'],
+   note:'2026年实施办法；2027年以学院最新通知为准'},
+
+  {id:4, school:'北京大学', college:'集成电路学院', type:'夏令营通知', year:'2026', region:'北京',
+   title:'北京大学集成电路学院关于举办2026年优秀大学生夏令营的通知',
+   target:['全国优秀大学生（主要面向大三）'],
+   conditions:['以通知原文为准（通常要求成绩优异、英语良好）'],
+   rankReq:'以通知原文为准', rankPct:null, englishReq:'以通知原文为准', enReq:null,
+   cross:'以通知原文为准',
+   materials:['以通知原文为准'],
+   applyStart:'', applyEnd:'', activity:'2026年6月发布通知，暑期举办',
+   url:'https://admission.pku.edu.cn/xly/index1.htm', publish:'2026-06-01', verify:'2026-10-28',
+   status:'已截止', majors:['集成电路','微电子','电子科学与技术'],
+   note:'来源为北京大学研究生招生网"夏令营"栏目；2027年夏令营预计2027年5-6月发布'},
+
+  {id:5, school:'北京大学', college:'计算机学院', type:'夏令营通知', year:'2026', region:'北京',
+   title:'北京大学计算机学院关于举办2026年优秀大学生夏令营的通知',
+   target:['全国优秀大学生（主要面向大三）'],
+   conditions:['以通知原文为准（通常要求成绩优异、英语良好）'],
+   rankReq:'以通知原文为准', rankPct:null, englishReq:'以通知原文为准', enReq:null,
+   cross:'以通知原文为准',
+   materials:['以通知原文为准'],
+   applyStart:'', applyEnd:'', activity:'2026年6月发布通知，暑期举办',
+   url:'https://admission.pku.edu.cn/xly/index1.htm', publish:'2026-06-01', verify:'2026-10-28',
+   status:'已截止', majors:['计算机科学与技术','软件工程','人工智能'],
+   note:'来源为北京大学研究生招生网"夏令营"栏目；2027年夏令营预计2027年5-6月发布'},
+
+  {id:6, school:'浙江大学', college:'传媒与国际文化学院', type:'夏令营通知', year:'2026', region:'浙江',
+   title:'浙江大学传媒与国际文化学院2026年优秀大学生夏令营活动通知',
+   target:['全国优秀大学生（主要面向大三）'],
+   conditions:['以通知原文为准（需先上传成绩单才能提交并生成申请表）'],
+   rankReq:'以通知原文为准', rankPct:null, englishReq:'以通知原文为准', enReq:null,
+   cross:'以通知原文为准',
+   materials:['成绩单（先上传后方可提交）','《浙江大学2026年夏令营申请表》（系统生成后下载打印）','其他按系统要求上传的证明材料'],
+   applyStart:'', applyEnd:'2026-06-22', activity:'2026年6月22日24时前登录浙大研究生院招生网夏令营网报入口报名',
+   url:'http://www.cmic.zju.edu.cn/2026/0611/c35565a3177388/page.htm', publish:'2026-06-11', verify:'2026-10-28',
+   status:'已截止', majors:['新闻传播学','传媒','国际文化'],
+   note:'2027年夏令营以学院最新通知为准'},
+
+  {id:7, school:'浙江大学', college:'医学院护理系', type:'夏令营通知', year:'2026', region:'浙江',
+   title:'浙江大学医学院护理系关于举办2026年全国优秀大学生夏令营的通知',
+   target:['全国优秀大学生（主要面向大三）'],
+   conditions:['以通知原文为准'],
+   rankReq:'以通知原文为准', rankPct:null, englishReq:'以通知原文为准', enReq:null,
+   cross:'以通知原文为准',
+   materials:['登录浙江大学研究生招生管理系统注册报名','按系统要求上传证明材料原件'],
+   applyStart:'', applyEnd:'', activity:'登录浙大研究生招生管理系统（yjsy.zju.edu.cn）网上报名',
+   url:'http://www.cmm.zju.edu.cn/_upload/article/files/39/60/f9c688894415a7d10e15c39fba35/1e4f8973-c1f7-407f-9735-f1599d284091.pdf', publish:'2026-06-01', verify:'2026-10-28',
+   status:'已截止', majors:['护理学'],
+   note:'2027年夏令营以学院最新通知为准'},
+
+  {id:8, school:'西北工业大学', college:'研究生院', type:'夏令营通知', year:'2026', region:'陕西',
+   title:'西北工业大学2026年研究生招生校园开放日（暑期夏令营）通知',
+   target:['全国优秀大学生（主要面向大三）'],
+   conditions:['以通知原文及各招生单位要求为准'],
+   rankReq:'以通知原文为准', rankPct:null, englishReq:'以通知原文为准', enReq:null,
+   cross:'以通知原文为准',
+   materials:['按各招生单位报名要求提交'],
+   applyStart:'2026-06-25', applyEnd:'2026-07-08', activity:'报名6月25日—7月8日；活动7月10日—12日（具体由各招生单位确定）',
+   url:'https://yzb.nwpu.edu.cn/info/1174/10458.htm', publish:'2026-06-25', verify:'2026-10-28',
+   status:'已截止', majors:['集成电路','微电子','航空','航天','材料','等多个学科'],
+   note:'2027年校园开放日以研究生招生信息网最新通知为准'},
+
+  {id:9, school:'北京交通大学', college:'经济管理学院', type:'夏令营通知', year:'2026', region:'北京',
+   title:'北京交通大学经济管理学院2026年"第十六届全国优秀大学生夏令营"活动方案',
+   target:['全国优秀大学生（主要面向大三）'],
+   conditions:['本校应届本科毕业生：课程成绩专业排名前40%','同类高校应届毕业生：专业排名前25%','具有相关优势特色学科高校应届毕业生：专业排名前10%','或获国家级学科竞赛全国二等奖以上、第一专利发明人、以第一作者发表A类论文（CSSCI/CSCD/SCI/SSCI/EI）'],
+   rankReq:'本校前40% / 同类高校前25% / 特色学科高校前10%，或成果特别突出', rankPct:[40,25,10], englishReq:'国家英语六级成绩单或四级成绩单（若无六级成绩）', enReq:4,
+   cross:'奖项、论文或专利内容须与接收专业相同或相近',
+   materials:['夏令营申请表（学校/学院盖章推荐意见）','身份证、学信网学籍在线验证报告','本科成绩单（教务处盖章）+ 前五/六学期专业排名证明','六级成绩单（或四级）','获奖证书','学术科研成果（论文需封面/目录/正文页）','网上报名要求的其他材料'],
+   applyStart:'2026-06-18', applyEnd:'2026-06-28', activity:'报名6月18日17:00—6月28日17:00；举办7月8日—9日（北京交通大学）',
+   url:'https://yzb.bjtu.edu.cn/sszs/2ed8ca6afc4c46cc958cf8be267682a4.htm', publish:'2026-06-23', verify:'2026-10-28',
+   status:'已截止', majors:['应用经济学','管理科学与工程','工商管理学','金融','应用统计','审计','会计'],
+   note:'咨询：学术型/金融/应用统计 jgyjs@bjtu.edu.cn 010-51687171；审计/会计 mpacc@bjtu.edu.cn 010-51684719'},
+
+  {id:10, school:'温州医科大学', college:'研究生院', type:'夏令营通知', year:'2026', region:'浙江温州',
+   title:'温州医科大学2026年全国优秀大学生夏令营活动通知',
+   target:['全国优秀大学生（主要面向大三）'],
+   conditions:['以通知原文及各主办学院要求为准'],
+   rankReq:'以通知原文为准', rankPct:null, englishReq:'以通知原文为准', enReq:null,
+   cross:'以通知原文为准',
+   materials:['登录温州医科大学研究生招生服务系统注册','招生项目栏选择"全国优秀大学生夏令营"','按系统要求提交材料（每人限注册3个账号）'],
+   applyStart:'', applyEnd:'', activity:'登录温州医科大学研究生招生服务系统（yjszs.wmu.edu.cn/yzbm）报名',
+   url:'https://yjsy.wmu.edu.cn/info/2481/162214.htm', publish:'2026-06-18', verify:'2026-10-28',
+   status:'已截止', majors:['临床医学','药学','基础医学','等多个学科'],
+   note:'2027年夏令营以研究生院最新通知为准'}
+];
+
+/* ============ 工具 ============ */
+function $(id){return document.getElementById(id)}
+var NOW = new Date();
+function todayStr(){return NOW.getFullYear()+'-'+String(NOW.getMonth()+1).padStart(2,'0')+'-'+String(NOW.getDate()).padStart(2,'0')}
+function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('show')},2400)}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function statusBadge(st){
+  var map={'报名中':['b-open','报名中'],'即将截止':['b-soon','即将截止'],'已截止':['b-end','已截止'],'待核实':['b-wait','待核实']};
+  var m=map[st]||['b-wait',st];
+  return '<span class="badge '+m[0]+'"><span class="dot"></span>'+m[1]+'</span>';
+}
+var SCHOOLS = Array.from(new Set(KB.map(function(e){return e.school})));
+var FAV_KEY='ytzd_favs', MAT_KEY='ytzd_mat_', FB_KEY='ytzd_fb';
+var favs = [];
+try{favs = JSON.parse(localStorage.getItem(FAV_KEY)||'[]')}catch(e){favs=[]}
+function saveFavs(){localStorage.setItem(FAV_KEY, JSON.stringify(favs))}
+function isFav(id){return favs.indexOf(id)>-1}
+function toggleFav(id){
+  var i=favs.indexOf(id);
+  if(i>-1){favs.splice(i,1);toast('已取消收藏')}
+  else{favs.push(id);toast('已收藏，可在"我的收藏"查看倒计时与材料清单')}
+  saveFavs();refreshFavButtons();
+}
+function refreshFavButtons(){
+  document.querySelectorAll('[data-fav]').forEach(function(b){
+    var on=isFav(parseInt(b.getAttribute('data-fav')));
+    b.textContent=on?'已收藏':'收藏';
+    b.classList.toggle('btn-p',on);
+    b.classList.toggle('btn-g',!on);
+  });
+}
+
+/* ============ 路由 ============ */
+function go(){
+  var hash=location.hash||'#/home';
+  var parts=hash.slice(2).split('/');
+  var path=parts[0]||'home';
+  document.querySelectorAll('.view').forEach(function(v){v.hidden=true});
+  var navMatch = path==='item' ? 'lib' : path;
+  document.querySelectorAll('.nav a,.mdrawer-panel a').forEach(function(a){
+    var h=a.getAttribute('href')||'';
+    a.classList.toggle('on', h==='#/'+navMatch || h==='#/'+path);
+  });
+  $('mdrawer').classList.remove('open');
+  if(path==='item'){$('view-item').hidden=false;showItem(parts[1]);return}
+  var v=$('view-'+path); if(!v){path='home';v=$('view-home')}
+  v.hidden=false;
+  if(path==='lib')renderLib();
+  if(path==='fav')renderFav();
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',go);
+
+/* ============ 智能问答引擎 ============ */
+var STOP=['的','了','吗','呢','什么','哪些','怎么','如何','一下','请问','需要','有','是','在','和','与','或','及','我','你','它','这个','那个','要求','条件','请问一下','呢','啊','吧','可以','能','是否','有没有','多少','什么','都','还'];
+function kw(q){
+  var toks=q.toLowerCase().split(/[，。？、；：,.?!\s]+/);
+  var out=[];
+  toks.forEach(function(t){
+    if(t.length>=2 && STOP.indexOf(t)<0 && SCHOOLS.indexOf(t)<0 && out.indexOf(t)<0)out.push(t);
+  });
+  return out;
+}
+var ALIAS={'浙大':'浙江大学','内大':'内蒙古大学','北交':'北京交通大学','北交大':'北京交通大学','西工大':'西北工业大学','温医大':'温州医科大学','北大':'北京大学'};
+function analyze(q){
+  var a={year:null,schools:[],type:null,status:null,intent:null,raw:q};
+  var m=q.match(/20\d{2}/); if(m)a.year=m[0];
+  SCHOOLS.forEach(function(s){if(q.indexOf(s)>-1)a.schools.push(s)});
+  Object.keys(ALIAS).forEach(function(k){if(q.indexOf(k)>-1&&a.schools.indexOf(ALIAS[k])<0)a.schools.push(ALIAS[k])});
+  if(/(夏令营|校园开放日|暑期学校)/.test(q))a.type='夏令营通知';
+  if(/(保研|推免|推荐免试|政策|实施办法)/.test(q))a.type='保研政策';
+  if(/(未截止|还在报名|还能报|正在报名|开放中|来得及)/.test(q))a.status='open';
+  if(/(材料|准备|清单)/.test(q))a.intent='materials';
+  if(/(条件|资格|要求|符合)/.test(q))a.intent='conditions';
+  if(/(什么时候|几号|多久|截止|时间|开始)/.test(q))a.intent='deadline';
+  if(/(排名|成绩|绩点)/.test(q))a.intent='rank';
+  if(/(英语|四级|六级|雅思|托福|外国语)/.test(q))a.intent='english';
+  if(/(跨专业|跨学科|跨考)/.test(q))a.intent='cross';
+  a.kws=kw(q);
+  return a;
+}
+var DOMAIN_TERMS=['推免','保研','夏令营','校园开放日','申请','报名','截止','材料','条件','资格','政策','排名','成绩','英语','四级','六级','专业','跨专业','跨学科','复试','通知','实施办法','研究生','学院','开放日','优秀','本科生','硕士','博士','入营','要求','录取','时间','几号','咨询','面试'];
+function entryPool(e){
+  return (e.title+' '+e.school+' '+e.college+' '+e.target.join(' ')+' '+e.conditions.join(' ')+' '+e.materials.join(' ')+' '+e.majors.join(' ')+' '+e.englishReq+' '+e.rankReq+' '+e.cross+' '+e.note).toLowerCase();
+}
+function search(q){
+  var a=analyze(q), hits=[];
+  var qterms=DOMAIN_TERMS.filter(function(t){return q.indexOf(t)>-1});
+  KB.forEach(function(e){
+    var s=0, why=[], pool=entryPool(e);
+    if(a.schools.indexOf(e.school)>-1){s+=5;why.push('学校匹配：'+e.school)}
+    if(a.year && e.year===a.year){s+=3;why.push('年份匹配：'+e.year)}
+    if(a.type && e.type===a.type){s+=3;why.push('类型匹配：'+e.type)}
+    if(a.status==='open'){
+      if(e.status==='报名中'||e.status==='即将截止'){s+=8;why.push('当前正在报名')}
+      else{s-=5;why.push('已截止')}
+    }
+    qterms.forEach(function(t){if(pool.indexOf(t)>-1){s+=2;why.push('关键词：'+t)}});
+    if(s>0)hits.push({e:e,s:s,why:why});
+  });
+  hits.sort(function(x,y){return y.s-x.s});
+  return {a:a,hits:hits.slice(0,4)};
+}
+function fmtDate(d){return d||'见官方原文'}
+function kbCard(it){
+  var e=it.e;
+  var cond=e.conditions.length>0?e.conditions.join('；'):'以官方原文为准';
+  return '<div class="kbcard">'
+   +'<h4>'+esc(e.title)+'</h4>'
+   +'<div class="kbtags"><span class="tag">'+esc(e.school)+' · '+esc(e.college)+'</span><span class="tag">'+e.year+'年</span>'+statusBadge(e.status)+'</div>'
+   +'<div class="kbf"><span><b>申请条件：</b>'+esc(cond)+'</span>'
+   +'<span><b>关键时间：</b>'+esc(e.activity||(e.applyStart+' 至 '+e.applyEnd))+'</span></div>'
+   +'<div class="kbsrc"><a href="'+esc(e.url)+'" target="_blank" rel="noopener"><svg class="ico"><use href="#i-link" xlink:href="#i-link"/></svg>官方原文</a><span>发布于 '+e.publish+' · 收录核验 '+e.verify+'</span></div>'
+   +'<div class="kbact"><button class="btn btn-sm '+(isFav(e.id)?'btn-p':'btn-g')+'" data-fav="'+e.id+'" type="button">'+(isFav(e.id)?'已收藏':'收藏')+'</button><a class="btn btn-sm btn-g" href="#/item/'+e.id+'">查看详情</a></div>'
+   +'</div>';
+}
+function sendQuestion(q){
+  q=(q||'').trim(); if(!q)return;
+  var log=$('chat-log');
+  var um=document.createElement('div');um.className='msg msg-user';
+  um.innerHTML='<div class="bubble">'+esc(q)+'</div>';
+  log.appendChild(um);
+  var r=search(q), a=r.a;
+  var bm=document.createElement('div');bm.className='msg msg-bot';
+  var txt='', inner='';
+  if(a.intent==='cross'){
+    txt='当前知识库中暂无明确写明"接受跨专业申请"的官方条目。跨专业是否可申请，通常由各培养单位的招生专业目录与当年办法决定，建议直接查看目标学院原文或电话咨询。';
+    inner='<div class="refuse">未收录 / 无可靠依据：跨专业政策没有统一答案，不能凭往年经验猜测。</div>';
+  }
+  if(!txt && r.hits.length===0){
+    if(a.status==='open'){
+      txt='当前知识库中暂无"正在报名"的项目。今天是 '+todayStr()+'，2026 年夏令营与 2027 年推免报名均已截止；新一年夏令营通知通常在 5—6 月发布，请关注各校研究生院官方渠道。';
+      inner='<div class="refuse">当前知识库未收录仍在报名的官方项目；我不会用往年时间猜测今年安排。</div>';
+    }else{
+      txt='当前知识库未收录与「'+q+'」直接匹配的官方条目，或无可靠依据回答。我不会用往年政策猜测今年要求。';
+      inner='<div class="refuse">建议：① 到目标高校研究生院 / 招生网查询原文；② 通过「反馈与纠错」告诉我们，可为你收录；③ 换个说法再问，例如加上学校名或年份。</div>';
+    }
+  }
+  if(!txt){
+    txt='找到 '+r.hits.length+' 条相关官方信息，均标注来源与收录核验日期。以下为初步检索结果，最终以官方原文为准。';
+    inner=r.hits.map(kbCard).join('');
+    if(a.intent==='materials')txt='找到 '+r.hits.length+' 条相关官方信息。材料要求一般以各条目"申请条件 / 申请材料"为准，最终以官方原文为准。';
+    if(a.intent==='deadline')txt='找到 '+r.hits.length+' 条相关官方信息。注意：目前知识库内项目大多已截止，新一年的通知请以官方渠道为准。';
+  }
+  bm.innerHTML='<div class="bubble">'+esc(txt)+inner+'</div>'
+    +'<div class="meta"><svg class="ico"><use href="#i-shield" xlink:href="#i-shield"/></svg>已检索本地知识库 · '+KB.length+' 条官方收录 · '+todayStr()+'</div>';
+  log.appendChild(bm);
+  log.scrollTop=log.scrollHeight;
+  refreshFavButtons();
+}
+
+/* ============ 条件匹配 ============ */
+function enLabel(v){return {none:'暂未考四六级',cet4:'四级425+',cet6:'六级425+',cet6h:'六级500+'}[v]||'未填'}
+function rankCheck(u,e){
+  if(!e.rankPct)return {s:'pass',t:'无统一排名要求（'+e.rankReq+'）'};
+  if(!u)return {s:'warn',t:'未填排名，无法核对：'+e.rankReq};
+  var arr=e.rankPct.slice().sort(function(a,b){return a-b});
+  if(u<=arr[0])return {s:'pass',t:'排名满足最严要求：'+e.rankReq};
+  if(u<=arr[arr.length-1])return {s:'warn',t:'排名处于区间内，是否满足视本科院校层次而定：'+e.rankReq};
+  return {s:'fail',t:'排名暂未达到要求：'+e.rankReq+'（当前选择：前 '+u+'%）'};
+}
+function enCheck(u,e){
+  if(e.enReq===null)return {s:'pass',t:'英语要求以官方原文为准'};
+  if(e.enReq===0)return {s:'pass',t:'英语不限（'+e.englishReq+'）'};
+  var lv={none:0,cet4:4,cet6:6,cet6h:7}[u]||0;
+  if(lv>=e.enReq)return {s:'pass',t:'英语满足：'+e.englishReq};
+  return {s:'warn',t:'英语需补充：'+e.englishReq+'（当前：'+enLabel(u)+'）'};
+}
+function regionMatch(u,e){
+  if(!u)return true;
+  var map={'华北（京津冀）':['北京'],'华东（江浙沪）':['浙江'],'西北':['陕西'],'华中':[],'西南':[],'华南':[],'东北':[]};
+  var targets=map[u]||[];
+  if(!targets.length)return u.indexOf(e.region)>-1||e.region.indexOf(u)>-1;
+  return targets.some(function(t){return e.region.indexOf(t)>-1});
+}
+function gradeNote(u,e){
+  var t=e.target.join('');
+  if(t.indexOf('推免资格')>-1)return u==='大四'?'':'主要面向具有推免资格的应届本科生（大四）';
+  if(t.indexOf('大三')>-1||t.indexOf('全国优秀大学生')>-1)return u==='大三'?'':'主要面向全国优秀大学生（通常为大三）';
+  return '';
+}
+function matchRun(){
+  var u={
+    major:($('mf-major').value||'').trim(),
+    grade:$('mf-grade').value,
+    intent:($('mf-intent').value||'').trim(),
+    rank:$('mf-rank').value?parseInt($('mf-rank').value):null,
+    en:$('mf-en').value,
+    region:$('mf-region').value
+  };
+  var groups={pass:[],warn:[],fail:[]};
+  KB.forEach(function(e){
+    var fails=[],warns=[],passes=[];
+    var rk=rankCheck(u.rank,e);
+    if(rk.s==='fail')fails.push(rk.t);else if(rk.s==='warn')warns.push(rk.t);else passes.push(rk.t);
+    var en=enCheck(u.en,e);
+    if(en.s==='warn')warns.push(en.t);else if(en.s==='pass')passes.push(en.t);
+    var gn=gradeNote(u.grade,e);
+    if(gn)warns.push(gn);
+    if(u.region&&!regionMatch(u.region,e.region))warns.push('地区：项目位于'+e.region+'，与意向地区（'+u.region+'）不一致');
+    if(u.intent&&e.majors.length){
+      var hit=e.majors.some(function(m){return u.intent.indexOf(m)>-1||m.indexOf(u.intent)>-1});
+      if(!hit)warns.push('专业：意向专业「'+u.intent+'」与该项目收录专业（'+e.majors.join('/')+'）未见明确对应，建议核对官方专业目录');
+      else passes.push('专业方向与收录专业相关');
+    }
+    if(e.status==='已截止')warns.push('该项目报名已截止（'+(e.applyEnd||'见原文')+'），作为参考了解要求');
+    var st=fails.length?'fail':(warns.length?'warn':'pass');
+    groups[st].push({e:e,fails:fails,warns:warns,passes:passes});
+  });
+  var labels={pass:['基本符合','s-pass'],warn:['需要补充条件','s-warn'],fail:['暂不符合','s-fail']};
+  var html='';
+  ['pass','warn','fail'].forEach(function(k){
+    var g=groups[k];
+    html+='<div class="sec-label"><span class="n">'+g.length+'</span>'+labels[k][0]+'</div>';
+    if(!g.length){html+='<div class="mempty" style="padding:14px 16px">无</div>';return}
+    g.forEach(function(it){
+      var e=it.e;
+      html+='<div class="card mcard '+labels[k][1]+'">'
+       +'<div class="mc-head"><h4>'+esc(e.title)+'</h4>'+statusBadge(e.status)+'</div>'
+       +'<div class="mc-sub">'+esc(e.school+' · '+e.college)+' · '+e.year+'年 · '+e.type+'</div>'
+       +'<div class="mc-body"><ul class="mc-reason">'
+       +it.passes.map(function(t){return '<li style="color:var(--teal)">'+esc(t)+'</li>'}).join('')
+       +it.warns.map(function(t){return '<li style="color:var(--amber)">'+esc(t)+'</li>'}).join('')
+       +it.fails.map(function(t){return '<li style="color:var(--red)">'+esc(t)+'</li>'}).join('')
+       +'</ul><div class="mc-act">'
+       +'<a class="btn btn-sm btn-g" href="#/item/'+e.id+'">查看详情</a>'
+       +'<button class="btn btn-sm '+(isFav(e.id)?'btn-p':'btn-g')+'" data-fav="'+e.id+'" type="button">'+(isFav(e.id)?'已收藏':'收藏')+'</button>'
+       +'</div></div></div>';
+    });
+  });
+  $('mresult').innerHTML='<div class="sec-label" style="margin-top:2px">匹配结果（基于 '+KB.length+' 条官方收录的初步判断）</div>'+html
+   +'<div class="mempty" style="padding:14px 16px;text-align:left;font-size:12.5px"><b style="font-size:13px">说明</b>匹配只做初步信息筛选，不构成录取承诺；最终以各高校官方原文与招生单位答复为准。</div>';
+  refreshFavButtons();
+}
+
+/* ============ 信息库 ============ */
+function renderLib(){
+  var kwv=($('lib-search-input').value||'').trim().toLowerCase();
+  var ft=$('lib-f-type').value, fs=$('lib-f-status').value, fy=$('lib-f-year').value, fr=$('lib-f-region').value;
+  var list=KB.filter(function(e){
+    if(ft&&e.type!==ft)return false;
+    if(fs&&e.status!==fs)return false;
+    if(fy&&e.year!==fy)return false;
+    if(fr&&!(e.region.indexOf(fr)>-1||fr.indexOf(e.region)>-1))return false;
+    if(kwv&&entryPool(e).indexOf(kwv)<0&&e.note.toLowerCase().indexOf(kwv)<0)return false;
+    return true;
+  });
+  $('lib-count').textContent='共 '+list.length+' 条（知识库共 '+KB.length+' 条 · 核验 '+todayStr()+'）';
+  var box=$('lib-grid');
+  if(!list.length){box.innerHTML='<div class="empty" style="grid-column:1/-1"><b>没有符合条件的条目</b>换个筛选条件或关键词试试；也可通过"反馈与纠错"申请收录。</div>';return}
+  box.innerHTML=list.map(function(e){
+    return '<div class="lcard card">'
+     +'<div class="ltags"><span class="tag">'+e.type+'</span><span class="tag">'+e.year+'年</span>'+statusBadge(e.status)+'</div>'
+     +'<h4>'+esc(e.title)+'</h4>'
+     +'<div class="lmeta"><span>'+esc(e.school+' · '+e.college)+'</span><span><b>关键时间：</b>'+esc(e.activity||(e.applyStart+' 至 '+e.applyEnd)||'见原文')+'</span></div>'
+     +'<div class="lfoot"><a class="btn btn-sm btn-g" href="#/item/'+e.id+'">查看详情</a>'
+     +'<button class="btn btn-sm '+(isFav(e.id)?'btn-p':'btn-g')+'" data-fav="'+e.id+'" type="button">'+(isFav(e.id)?'已收藏':'收藏')+'</button></div>'
+     +'</div>';
+  }).join('');
+  refreshFavButtons();
+}
+
+/* ============ 项目详情 ============ */
+function cdLine(e){
+  if(!e.applyEnd)return '';
+  var end=new Date(e.applyEnd), diff=Math.floor((end-NOW)/86400000);
+  if(diff>=0)return '<div class="item-cd"><svg class="ico"><use href="#i-clock" xlink:href="#i-clock"/></svg><div><b>'+diff+' 天</b><span>距报名截止 '+e.applyEnd+'（'+(e.status==='即将截止'?'请尽快准备':'以官方为准')+'）</span></div></div>';
+  return '<div class="item-cd"><svg class="ico"><use href="#i-clock" xlink:href="#i-clock"/></svg><div><b class="end" style="color:var(--red)">已截止</b><span>报名截止于 '+e.applyEnd+'，已结束 '+Math.abs(diff)+' 天，供参考</span></div></div>';
+}
+function showItem(id){
+  var e=KB.find(function(x){return x.id===parseInt(id)});
+  var head=$('item-head'), kv=$('item-kv'), src=$('item-src'), act=$('item-act');
+  if(!e){location.hash='#/lib';return}
+  head.innerHTML='<div class="item-meta"><span class="tag">'+e.type+'</span><span class="tag">'+e.year+'年</span>'+statusBadge(e.status)+'</div>'
+   +'<h2>'+esc(e.title)+'</h2>'
+   +'<div style="font-size:13.5px;color:var(--ink2)">'+esc(e.school+' · '+e.college)+' · '+esc(e.region)+'</div>'
+   +cdLine(e)
+   +(e.note?'<div style="font-size:13px;color:var(--ink2);background:var(--paper);border-radius:9px;padding:9px 12px">'+esc(e.note)+'</div>':'');
+  var cond=e.conditions.length?'<ul>'+e.conditions.map(function(c){return '<li>'+esc(c)+'</li>'}).join('')+'</ul>':'<ul><li>以官方原文为准</li></ul>';
+  var mats=e.materials.length?'<ul>'+e.materials.map(function(c){return '<li>'+esc(c)+'</li>'}).join('')+'</ul>':'<ul><li>以官方原文为准</li></ul>';
+  kv.innerHTML='<div class="box"><h4><svg class="ico"><use href="#i-check" xlink:href="#i-check"/></svg>申请条件 / 适用对象</h4><div style="font-size:13px;color:var(--ink2);margin-bottom:8px">适用对象：'+esc(e.target.join('；'))+'</div>'+cond+'</div>'
+   +'<div class="box"><h4><svg class="ico"><use href="#i-doc" xlink:href="#i-doc"/></svg>申请材料清单</h4>'+mats+'</div>'
+   +'<div class="box"><h4><svg class="ico"><use href="#i-cal" xlink:href="#i-cal"/></svg>关键时间节点</h4><ul>'
+   +(e.applyStart?'<li>报名开始：'+e.applyStart+'</li>':'')
+   +(e.applyEnd?'<li>报名截止：'+e.applyEnd+'</li>':'')
+   +'<li>'+esc(e.activity)+'</li>'
+   +'<li>收录核验：'+e.verify+'</li></ul></div>'
+   +'<div class="box"><h4><svg class="ico"><use href="#i-filter" xlink:href="#i-filter"/></svg>其他要求</h4><ul>'
+   +'<li>排名要求：'+esc(e.rankReq)+'</li>'
+   +'<li>英语要求：'+esc(e.englishReq)+'</li>'
+   +'<li>跨专业：'+esc(e.cross)+'</li>'
+   +(e.majors.length?'<li>收录专业：'+esc(e.majors.join(' / '))+'</li>':'')
+   +'</ul></div>';
+  src.innerHTML='<div><svg class="ico"><use href="#i-link" xlink:href="#i-link"/></svg><b>官方原文：</b><a href="'+esc(e.url)+'" target="_blank" rel="noopener">'+esc(e.url)+'</a></div>'
+   +'<div style="margin-top:6px">发布时间 '+e.publish+' · 收录与核验日期 '+e.verify+' · 信息类型：'+e.type+' · 适用年份：'+e.year+'</div>'
+   +'<div style="margin-top:6px;color:var(--ink3)">信息以官方原文为准；如与原文不符，请通过「反馈与纠错」告知，我们将更正或下架。</div>';
+  act.innerHTML='<button class="btn '+(isFav(e.id)?'btn-p':'btn-g')+'" data-fav="'+e.id+'" type="button">'+(isFav(e.id)?'已收藏':'收藏该项目')+'</button>'
+   +'<a class="btn btn-g" href="#/fav">查看我的收藏</a>'
+   +'<a class="btn btn-g" href="#/feedback">反馈纠错</a>';
+  refreshFavButtons();
+}
+
+/* ============ 收藏与提醒 ============ */
+function cdOf(e){
+  if(!e.applyEnd)return null;
+  var end=new Date(e.applyEnd),diff=Math.floor((end-NOW)/86400000);
+  return diff;
+}
+function renderFav(){
+  var box=$('fav-content');
+  if(!favs.length){box.innerHTML='<div class="fav-empty"><svg class="ico" style="width:40px;height:40px;margin:0 auto;color:var(--ink3)"><use href="#i-star" xlink:href="#i-star"/></svg><b>还没有收藏任何项目</b>去信息库浏览官方收录，收藏后这里会显示申请倒计时与材料清单。<div style="margin-top:12px"><a class="btn btn-p" href="#/lib">去信息库</a></div></div>';return}
+  var items=favs.map(function(id){return KB.find(function(e){return e.id===id})}).filter(Boolean);
+  box.innerHTML='<div class="cdbar">'+items.map(function(e){
+    var d=cdOf(e);
+    var num=d===null?'—':(d>=0?d+' 天':'已截止');
+    var cls=d!==null&&d<0?'end':'';
+    var mats=e.materials.map(function(m,i){
+      var key=MAT_KEY+e.id;
+      var done=[];try{done=JSON.parse(localStorage.getItem(key)||'[]')}catch(err){done=[]}
+      var chk=done.indexOf(i)>-1?'checked':'';
+      return '<label><input type="checkbox" data-mat="'+e.id+'" data-i="'+i+'" '+chk+'><span>'+esc(m)+'</span></label>';
+    }).join('');
+    return '<div class="cdb"><div class="cdb-top"><h4>'+esc(e.title)+'</h4>'+statusBadge(e.status)+'</div>'
+     +'<div class="cdb-num '+cls+'">'+num+'</div>'
+     +'<div class="cdb-sub">'+(d===null?'官方未标注统一截止日期，见原文':(d>=0?'距报名截止 '+e.applyEnd:'报名已于 '+e.applyEnd+' 截止（结束 '+Math.abs(d)+' 天）'))+'</div>'
+     +(mats?'<div class="cdb-mat"><div style="font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:4px">材料清单（勾选已完成）</div>'+mats+'</div>':'')
+     +'<div class="cdb-act"><a class="btn btn-sm btn-g" href="#/item/'+e.id+'">查看详情</a>'
+     +'<a class="btn btn-sm btn-g" href="'+esc(e.url)+'" target="_blank" rel="noopener">官方报名入口</a>'
+     +'<button class="btn btn-sm btn-g" data-unfav="'+e.id+'" type="button">取消收藏</button></div></div>';
+  }).join('')+'</div>';
+  refreshFavButtons();
+}
+
+/* ============ 反馈 ============ */
+function saveFb(){
+  var type=$('fb-type').value, email=($('fb-email').value||'').trim(), msg=($('fb-msg').value||'').trim();
+  if(!msg){toast('请填写具体内容');return}
+  var list=[];try{list=JSON.parse(localStorage.getItem(FB_KEY)||'[]')}catch(e){list=[]}
+  list.push({type:type,email:email,msg:msg,time:todayStr()});
+  localStorage.setItem(FB_KEY,JSON.stringify(list));
+  $('fb-msg').value='';$('fb-email').value='';
+  toast('反馈已记录（本地演示版），感谢你的纠错');
+}
+
+/* ============ 事件绑定 ============ */
+document.addEventListener('click',function(ev){
+  var t=ev.target.closest('[data-q]');
+  if(t){location.hash='#/ask';sendQuestion(t.getAttribute('data-q'));return}
+  t=ev.target.closest('[data-fav]');
+  if(t){toggleFav(parseInt(t.getAttribute('data-fav')));return}
+  t=ev.target.closest('[data-unfav]');
+  if(t){var id=parseInt(t.getAttribute('data-unfav')),i=favs.indexOf(id);if(i>-1){favs.splice(i,1);saveFavs()}renderFav();toast('已取消收藏');return}
+  t=ev.target.closest('input[data-mat]');
+  if(t){var id=parseInt(t.getAttribute('data-mat')),i=parseInt(t.getAttribute('data-i')),key=MAT_KEY+id,done=[];try{done=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){done=[]}
+    if(t.checked){if(done.indexOf(i)<0)done.push(i)}else{done=done.filter(function(x){return x!==i})}
+    localStorage.setItem(key,JSON.stringify(done));return}
+});
+$('chat-form').addEventListener('submit',function(ev){ev.preventDefault();var v=$('chat-input').value;$('chat-input').value='';sendQuestion(v)});
+$('quickask').addEventListener('submit',function(ev){ev.preventDefault();var v=$('quickask-input').value;$('quickask-input').value='';location.hash='#/ask';sendQuestion(v)});
+$('mform').addEventListener('submit',function(ev){ev.preventDefault();matchRun()});
+$('fb-form').addEventListener('submit',function(ev){ev.preventDefault();saveFb()});
+$('lib-search-btn').addEventListener('click',renderLib);
+$('lib-search-input').addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();renderLib()}});
+['lib-f-type','lib-f-status','lib-f-year','lib-f-region'].forEach(function(id){$(id).addEventListener('change',renderLib)});
+$('fav-to-lib').addEventListener('click',function(){location.hash='#/lib'});
+$('fav-clear').addEventListener('click',function(){if(favs.length){favs=[];saveFavs();renderFav();toast('已清空收藏')}else toast('还没有收藏')});
+$('burger').addEventListener('click',function(){$('mdrawer').classList.add('open')});
+$('mclose').addEventListener('click',function(){$('mdrawer').classList.remove('open')});
+$('mdrawer').addEventListener('click',function(ev){if(ev.target===this)$('mdrawer').classList.remove('open')});
+document.addEventListener('click',function(ev){
+  var a=ev.target.closest('a');
+  if(a&&$('mdrawer').classList.contains('open'))$('mdrawer').classList.remove('open');
+});
+(function init(){
+  $('stat-kb').textContent=KB.length;
+  $('stat-school').textContent=SCHOOLS.length;
+  var d=document.createElement('div');d.id='toast';document.body.appendChild(d);
+  // 首页欢迎语（问答视图初次进入时展示）
+  var log=$('chat-log');
+  var w=document.createElement('div');w.className='msg msg-bot';
+  w.innerHTML='<div class="bubble">你好，我是研途智导的检索助手。我可以基于知识库回答保研政策、夏令营通知相关的问题，并标注官方来源与核验日期。查不到的会明说"未收录"，绝不编造。试试问："哪些学校接受跨专业申请？"</div>';
+  log.appendChild(w);
+  go();
+})();
+</script>
+</body>
+</html>
